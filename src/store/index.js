@@ -1,4 +1,5 @@
 import { createStore } from 'vuex'
+import Plotly from 'plotly.js-dist-min'
 
 export default createStore({
   state: {
@@ -7,7 +8,11 @@ export default createStore({
     //RECTAS, UNION ENTRE 2 PUNTOS
     rectas:[[null, null]],
     //TRANSFORMACIONES
-    transformaciones: []
+    transformaciones: [],
+    show_plots: false,
+    puntos: null,
+    id_plots: null,
+    plots: null
   },
   getters: { 
   //LISTA QUR CONTIENE TODOS LOS PUNTOS
@@ -21,8 +26,6 @@ export default createStore({
     //ITERA SOBRE CADA UNA DE LAS TRANSFORMACIONES
     state.transformaciones.forEach(function(item){
       nv_punto=[]
-      console.log("ULTIMO SET DE PUNTOS")
-      console.log(puntos.at(-1))
       puntos_transformados=[];
       //POR CADA TRANSFORMACION
       if (item.transformacion=='escalar'){
@@ -90,8 +93,6 @@ export default createStore({
       }
       else if(item.transformacion=='rotar'){
         let angulo_rad = item.alpha*((Math.PI)/180);
-        console.log("ANGULO");
-        console.log(angulo_rad)
         //POR CADA UNO DE LOS PUNTOS ROTADOS
         puntos.at(-1).forEach(function(item2){
           let nv_punto=[]
@@ -159,7 +160,73 @@ export default createStore({
         puntos_transformados=[]
       }
     })
-    return puntos;
+    let retorno= {
+      puntos:puntos,
+      show_plots:false,
+      id_plots: []
+    }
+    //POR CADA UNA DE LAS MATRICES DE PUNTOS  
+    puntos.forEach(function(item, index){
+      retorno.id_plots.push("id_".concat(index))
+      /*
+      let coord_x = []
+      let coord_y = []
+      let coord_z = []
+      item.forEach(function(coords){
+        coord_x.push(coords[0])
+        coord_y.push(coords[1])
+        coord_z.push(coords[2])
+      })
+      console.log(coord_x)
+      console.log(coord_y)
+      console.log(coord_z)
+      let plot = Plotly.newPlot("id_".concat(index), [{
+        type: 'scatter3d',
+        mode: 'lines',
+        x: coord_x,
+        y: coord_y,
+        z: coord_z,
+        opacity: 0.7,
+        line: {
+          width: 10,
+          colorscale: 'Viridis'}
+       }]);
+       retorno.plots.push(plot)*/
+    })
+    return retorno;
+  },
+  //LISTA QUR CONTIENE TODOS LOS PUNTOS
+  haz_plots(state){
+    let puntos=state.puntos
+    let retorno = {
+      plots:[]
+    }
+    puntos.forEach(function(item, index){
+      let coord_x = []
+      let coord_y = []
+      let coord_z = []
+      //ITERA SOBRE CADA UNA DE LAS ARISTAS
+      state.rectas.forEach(function(coords){
+        coord_x.push(item[coords[0]][0])
+        coord_y.push(item[coords[0]][1])
+        coord_z.push(item[coords[0]][2])
+        coord_x.push(item[coords[1]][0])
+        coord_y.push(item[coords[1]][1])
+        coord_z.push(item[coords[1]][2])
+      })
+      let plot = Plotly.newPlot("id_".concat(index), [{
+        type: 'scatter3d',
+        mode: 'lines',
+        x: coord_x,
+        y: coord_y,
+        z: coord_z,
+        opacity: 0.7,
+        line: {
+          width: 10,
+          colorscale: 'Viridis'}
+       }]);
+       retorno.plots.push(plot)
+    })
   }
 
 },

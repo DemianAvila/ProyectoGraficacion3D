@@ -26,7 +26,28 @@
       bg-slate-900
       text-white"
         @click="get_all_data">
-          Visualizar
+          Cálculos
+        </button>
+      </div>
+      <div v-if="$store.state.show_plots"
+      class="col-span-3
+      grid
+      grid-cols-3">
+        <div class=""
+        v-for="(item, index) in $store.state.id_plots" :key="index">
+          <div :id="item"></div>
+        </div>
+      </div>
+      <div class="col-start-2
+      grid
+      grid-cols-3">
+        <button class="col-start-2
+        border-slate-100
+          border-2
+        bg-slate-900
+        text-white"
+          @click="render_plots">
+          Renderizar gráficas
         </button>
       </div>
     </div>
@@ -52,9 +73,21 @@ export default {
   },
   methods:{
   get_all_data: function (){
-    console.log(this.$store.state)
     let transformaciones = this.$store.getters.haz_transformaciones
-    console.log(transformaciones)
+    this.$store.state.show_plots=transformaciones.show_plots
+    this.$store.state.puntos=transformaciones.puntos
+    this.$store.state.id_plots=transformaciones.id_plots
+    this.$store.state.plots=transformaciones.plots
+    this.$store.state.show_plots=true
+    //ITERA TODAS LAS ARISTAS Y RESTALES -1 PARA JUNTARLAS
+    this.$store.state.rectas.forEach(function(item){
+      item[0]--;
+      item[1]--;
+    })
+    console.log(this.$store.state)
+  },
+  render_plots: function(){
+    this.$store.state.plots = this.$store.getters.haz_plots
   }
 }
 }
