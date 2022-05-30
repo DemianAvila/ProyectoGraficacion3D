@@ -50,16 +50,84 @@
     </div>
     <div v-if="item.transformacion=='escalar'"
     class="border-slate-100
-  border-2
-  bg-slate-900">
-      Porcentaje
+    border-2
+  bg-slate-900
+    col-span-3
+    grid
+    grid-cols-3">
+      <div>
+        Porcentaje
+      </div>
+      <div class="ml-6
+      col-span-2
+      text-black">
+        <input type="number"
+        class="w-full
+        h-full"
+        v-model="item.porcentaje">
+      </div>
     </div>
-    <div class="ml-6
-    col-span-2
-    text-black">
-      <input type="number"
-      class="w-full
-      h-full">
+    <div v-else-if="item.transformacion=='trasladar'"
+    class="border-slate-100
+    border-2
+  bg-slate-900
+    col-span-3
+    grid
+    grid-cols-3">
+      <div>
+        Eje
+      </div>
+      <div class="ml-6
+      col-span-2
+      text-black">
+        <select name="" id="" v-model="item.eje">
+          <option value="x">X</option>
+          <option value="y">Y</option>
+          <option value="z">Z</option>
+        </select>
+      </div>
+      <div>
+        Unidades
+      </div>
+      <div class="ml-6
+      col-span-2
+      text-black">
+        <input type="number"
+        class="w-full
+        h-full"
+        v-model="item.unidades">
+      </div>
+    </div>
+    <div v-else-if="item.transformacion=='rotar'"
+    class="border-slate-100
+    border-2
+  bg-slate-900
+    col-span-3
+    grid
+    grid-cols-3">
+      <div>
+        Eje
+      </div>
+      <div class="ml-6
+      col-span-2
+      text-black">
+        <select name="" id="" v-model="item.eje">
+          <option value="x">X</option>
+          <option value="y">Y</option>
+          <option value="z">Z</option>
+        </select>
+      </div>
+      <div>
+        α
+      </div>
+      <div class="ml-6
+      col-span-2
+      text-black">
+        <input type="number"
+        class="w-full
+        h-full"
+        v-model="item.alpha">
+      </div>
     </div>
   </div>
 

@@ -9,8 +9,13 @@
   },
   "dependencies": {
     "core-js": "^3.8.3",
+    "three": "^0.140.2",
+    "three-css2drender": "^1.0.0",
+    "three-obj-mtl-loader": "^1.0.3",
+    "three-orbit-controls": "^82.1.0",
     "vue": "^3.2.13",
     "vue-router": "^4.0.3",
+    "vue-threejs": "^0.2.0-alpha.1",
     "vuex": "^4.0.0"
   },
   "devDependencies": {

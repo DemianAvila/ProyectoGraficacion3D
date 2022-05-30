@@ -51,7 +51,7 @@
   bg-slate-900">
       <button class="w-full
       h-full"
-      @click="$store.commit('quita_transformacion', index)">
+      @click="$store.commit('quita_arista', index)">
       -
       </button>
     </div>
@@ -64,7 +64,7 @@
     border-slate-100
     border-2
   bg-slate-900"
-    @click="$store.commit('aniade_transformacion')">
+    @click="$store.commit('aniade_arista')">
       Añadir nueva arista
     </button>
   </div>
